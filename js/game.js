@@ -2,7 +2,7 @@
     const image = new Image(),
         takePhotoButton = document.querySelector(".takePhoto");
     
-    let constraints, imageCapture, mediaStream, video;
+    let imageCapture;
 
     // Puzzle Variables
     const markers = document.querySelectorAll("a-marker"),
@@ -28,31 +28,19 @@
 
     // Get a video stream from the camera
     const getStream = () => {
-        if (mediaStream) {
-            mediaStream.getTracks().forEach(track => track.stop());   
-        }
-
-        constraints = {
-            video: {
-                width: 720,
-                height: 720,
-            }
-        }
-
-        navigator.mediaDevices.getUserMedia(constraints)
-            .then(gotStream)
+        navigator.mediaDevices.getUserMedia({video: true})
+            .then(mediaStream => {
+            //Display the stream from the camera, and then 
+            document.querySelector('video').srcObject = mediaStream;
+            //create an ImageCapture object, using video from the stream
+            const track = mediaStream.getVideoTracks()[0];
+            imageCapture = new ImageCapture(track);
+            })
             .catch(error => {
-                console.log("getUserMedia error", error);
+            console.log('getUserMedia error', error);
             });
-    };
+    }
 
-    // display the stream from the camera , and then 
-    // create an ImageCapture object, using that video stream
-    const gotStream = stream => {
-        mediaStream = stream;
-        video.srcObject = stream;
-        imageCapture = new ImageCapture(stream.getVideoTracks()[0]);
-    };
 
     // take the picture
     const getPicture = () => {
