@@ -18,12 +18,11 @@
 
 
     const init = () => {
-        video = document.querySelector("video");
         navigator.mediaDevices.enumerateDevices()
-            .catch(error => console.log("enumerateDevices() error", error))
-            .then(getStream);
+			.catch(error => console.log('enumerateDevices() error', error))
+			.then(getStream);
 
-        takePhotoButton.addEventListener("click", getPicture);
+		takePhotoButton.addEventListener('click', getPicture);
     };
 
     // Get a video stream from the camera
@@ -32,15 +31,15 @@
             .then(mediaStream => {
             //Display the stream from the camera, and then 
             document.querySelector('video').srcObject = mediaStream;
+
             //create an ImageCapture object, using video from the stream
             const track = mediaStream.getVideoTracks()[0];
             imageCapture = new ImageCapture(track);
             })
             .catch(error => {
-            console.log('getUserMedia error', error);
+                console.log('getUserMedia error', error);
             });
     }
-
 
     // take the picture
     const getPicture = () => {
@@ -73,7 +72,7 @@
                 pieces = pieces - 3;
 
                 if (pieces < 0) {
-                    pices = (puzzlePieces - 1) + pieces;
+                    pieces = (puzzlePieces - 1) + pieces;
                 }
             }
         }
