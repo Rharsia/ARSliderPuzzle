@@ -152,5 +152,5 @@ const shuffle = randomArray => {
     return randomArray;
 }
 
-
+    window.addEventListener("load", () => setTimeout(() => init(), 1000));
 }
